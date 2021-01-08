@@ -2,8 +2,8 @@
 [![GitHub forks](https://img.shields.io/github/forks/Villenny/jsonparserHelper-go)](https://github.com/Villenny/jsonparserHelper-go/network)
 [![GitHub stars](https://img.shields.io/github/stars/Villenny/jsonparserHelper-go)](https://github.com/Villenny/jsonparserHelper-go/stargazers)
 [![GitHub license](https://img.shields.io/github/license/Villenny/jsonparserHelper-go)](https://github.com/Villenny/jsonparserHelper-go/blob/master/LICENSE)
-![Go](https://github.com/Villenny/jsonparserHelper-go/workflows/Go/badge.svg?branch=main)
-![Codecov branch](https://img.shields.io/codecov/c/github/villenny/jsonparserHelper-go/main)
+![Go](https://github.com/Villenny/jsonparserHelper-go/workflows/Go/badge.svg?branch=master)
+![Codecov branch](https://img.shields.io/codecov/c/github/villenny/jsonparserHelper-go/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Villenny/jsonparserHelper-go)](https://goreportcard.com/report/github.com/Villenny/jsonparserHelper-go)
 [![Documentation](https://godoc.org/github.com/Villenny/jsonparserHelper-go?status.svg)](http://godoc.org/github.com/Villenny/jsonparserHelper-go)
 
