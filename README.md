@@ -63,11 +63,6 @@ Use your parser. Yay zero allocations (almost, buger/jsonparser still has a few 
 
 ```
 $ ./bench.sh
-go: finding module for package github.com/buger/jsonparser
-go: finding module for package github.com/juju/errors
-go: downloading github.com/buger/jsonparser v1.1.1
-go: found github.com/buger/jsonparser in github.com/buger/jsonparser v1.1.1
-go: found github.com/juju/errors in github.com/juju/errors v0.0.0-20200330140219-3fe23663418f
 === RUN   TestRunParser
 === RUN   TestRunParser/simple_test
 --- PASS: TestRunParser (0.00s)
@@ -76,11 +71,12 @@ goos: windows
 goarch: amd64
 pkg: github.com/villenny/jsonparserHelper-go
 BenchmarkRunParser
-BenchmarkRunParser-8      558702              4091 ns/op              96 B/op          3 allocs/op
+BenchmarkRunParser-8      924062              3947 ns/op              96 B/op          3 allocs/op
 BenchmarkEachKey
-BenchmarkEachKey-8        649303              3734 ns/op              96 B/op          3 allocs/op
+BenchmarkEachKey-8        973983              3854 ns/op              96 B/op          3 allocs/op
 PASS
-ok      github.com/villenny/jsonparserHelper-go 5.009s
+ok      github.com/villenny/jsonparserHelper-go 7.701s
+
 ```
 
 ## Contact
