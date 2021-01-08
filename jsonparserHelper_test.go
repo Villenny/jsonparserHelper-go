@@ -5,6 +5,8 @@ import (
 	"unsafe"
 
 	"github.com/buger/jsonparser"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/mxmCherry/openrtb/openrtb2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -78,9 +80,9 @@ Deserialize with:
 */
 
 /*
+BenchmarkRunParser
 BenchmarkRunParser-8
-  308013	      3947 ns/op	      96 B/op	       3 allocs/op
-PASS
+  900884	      3968 ns/op	      96 B/op	       3 allocs/op
 */
 func BenchmarkRunParser(b *testing.B) {
 
@@ -106,50 +108,36 @@ func BenchmarkRunParser(b *testing.B) {
 }
 
 /*
-func BenchmarkParse(b *testing.B) {
+BenchmarkJsonIterator
+BenchmarkJsonIterator-8
+ 1695078	      2139 ns/op	     832 B/op	      18 allocs/op
+*/
+func BenchmarkJsonIterator(b *testing.B) {
+	var json = jsoniter.ConfigCompatibleWithStandardLibrary
+	bodyBytes := StringAsBytes(BidResponse_Banner)
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		// for some reason go thinks this will escape if I define paths here
-		// paths := BidResponse_Banner_Paths
+		bidResponse := openrtb2.BidResponse{}
+		err := json.Unmarshal(bodyBytes, &bidResponse)
 
-		bodyBytes := StringAsBytes(BidResponse_Banner)
-
-		results := make([]JsonparserResult, 7)[:]
-		_ = Parse(bodyBytes, results, [][]string{
-			{"id"},
-			{"seatbid", "[0]", "bid", "[0]", "id"},
-			{"seatbid", "[0]", "bid", "[0]", "impid"},
-			{"seatbid", "[0]", "bid", "[0]", "price"},
-			{"seatbid", "[0]", "bid", "[0]", "adm"},
-			{"cur"},
-			{"foo"},
-		}...)
-		id := results[0].GetUnsafeStringOrEmpty()
-		bidId := results[1].GetUnsafeStringOrEmpty()
-		bidImpId := results[2].GetUnsafeStringOrEmpty()
-		bidPrice := results[3].GetUnsafeStringOrEmpty()
-		bidAdm := results[4].GetUnsafeStringOrEmpty()
-		cur := results[5].GetUnsafeStringOrEmpty()
-		foo := results[6].GetUnsafeStringOrEmpty()
-
-		if "9f3701ef-1d8a-4b67-a601-e9a1a2fbcb7c" != id ||
-			"0" != bidId ||
-			"1" != bidImpId ||
-			"0.35258" != bidPrice ||
-			`some \"html\" code\nnext line` != bidAdm ||
-			"USD" != cur ||
-			"" != foo {
+		if "9f3701ef-1d8a-4b67-a601-e9a1a2fbcb7c" != bidResponse.ID ||
+			"USD" != bidResponse.Cur ||
+			"0" != bidResponse.SeatBid[0].Bid[0].ID ||
+			"1" != bidResponse.SeatBid[0].Bid[0].ImpID ||
+			0.35258 != bidResponse.SeatBid[0].Bid[0].Price ||
+			"some \"html\" code\nnext line" != bidResponse.SeatBid[0].Bid[0].AdM ||
+			err != nil {
 			panic("ack")
 		}
+
 	}
 }
-*/
 
 /*
 BenchmarkEachKey
 BenchmarkEachKey-8
-  308006	      3885 ns/op	     272 B/op	       4 allocs/op
+  924060	      3751 ns/op	      96 B/op	       3 allocs/op
 PASS
 */
 func BenchmarkEachKey(b *testing.B) {

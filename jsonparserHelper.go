@@ -107,6 +107,7 @@ const JsonparserValueType_UnsafeString = 1
 const JsonparserValueType_Int64 = 2
 const JsonparserValueType_Int = 3
 const JsonparserValueType_Float64 = 4
+const JsonparserValueType_ByteArray = 5
 
 type JsonparserValue struct {
 	Type   int
@@ -127,6 +128,10 @@ func IntValue(p uintptr) JsonparserValue {
 
 func Float64Value(p uintptr) JsonparserValue {
 	return JsonparserValue{Type: JsonparserValueType_Float64, Offset: p}
+}
+
+func ByteArrayValue(p uintptr) JsonparserValue {
+	return JsonparserValue{Type: JsonparserValueType_ByteArray, Offset: p}
 }
 
 type Parser struct {
@@ -175,6 +180,8 @@ func RunParser(bodyBytes []byte, parser []Parser, dest unsafe.Pointer) error {
 			*(*int)(pValue) = r.GetIntOrZero()
 		case JsonparserValueType_Float64:
 			*(*float64)(pValue) = r.GetFloatOrZero()
+		case JsonparserValueType_ByteArray:
+			*(*[]byte)(pValue) = r.Value
 		}
 
 	}, paths...)

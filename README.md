@@ -9,7 +9,7 @@
 
 # jsonparserHelper-go
 - zero allocation json parsing
-- convenience helper for serializing with buger/jsonpaser to a struct
+- convenience helper for serializing with (https://github.com/buger/jsonparser) to a struct
 
 
 ## Install
@@ -63,6 +63,7 @@ Use your parser. Yay zero allocations (almost, buger/jsonparser still has a few 
 ## Benchmark
 
 - Still have 3 allocs inside buger/jsonparser EachKey function, once those are fixed (I contributed a PR which is under review), will be zero
+- Unfortunately, still significantly slower than the json iterator package (https://github.com/json-iterator/go)
 
 ```
 $ ./bench.sh
@@ -74,11 +75,14 @@ goos: windows
 goarch: amd64
 pkg: github.com/villenny/jsonparserHelper-go
 BenchmarkRunParser
-BenchmarkRunParser-8      924062              3947 ns/op              96 B/op          3 allocs/op
+BenchmarkRunParser-8              923974              3944 ns/op              96 B/op          3 allocs/op
+BenchmarkJsonIterator
+BenchmarkJsonIterator-8          1611687              2219 ns/op             832 B/op         18 allocs/op
 BenchmarkEachKey
-BenchmarkEachKey-8        973983              3854 ns/op              96 B/op          3 allocs/op
+BenchmarkEachKey-8                948354              3724 ns/op              96 B/op          3 allocs/op
 PASS
-ok      github.com/villenny/jsonparserHelper-go 7.701s
+ok      github.com/villenny/jsonparserHelper-go 13.311s
+01s
 
 ```
 
