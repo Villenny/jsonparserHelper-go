@@ -25,7 +25,10 @@ go get -u github.com/Villenny/jsonparserHelper-go
 The expected use case:
 - declare your parser somewhere
 ```
-	import "github.com/villenny/jsonparserHelper-go"
+	import (
+		"github.com/buger/jsonparser"
+		"github.com/villenny/jsonparserHelper-go"
+	)
 
 	type Fubar struct {
 		Id       string
